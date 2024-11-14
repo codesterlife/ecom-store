@@ -21,7 +21,7 @@ function Navbar() {
     <AppBar position="fixed" color='secondary'>
       <Toolbar>
       <Typography variant="h6" style={{ flexGrow: 1, fontFamily: 'Fira Code', fontWeight: 'bold'}}>
-          E-COM Store
+          E-COM Store.
         </Typography>
         <Button color="inherit" style={{ fontWeight: 'bold' }} component={Link} to="/">
           Home

@@ -12,6 +12,7 @@ import Payment from './pages/Payment';
 import DirectPayment from './pages/DirectPayment';
 import EditItem from './pages/EditItem';
 import ProductList from './pages/ProductList';
+import { Typography } from '@mui/material';
 
 function App() {
   return (
@@ -19,6 +20,8 @@ function App() {
       <Router>
         <Navbar />
         <div style={{ paddingTop: '64px' }}></div>
+        <Typography variant="h3" style={{fontFamily: 'Fira Code', fontWeight: 'bold', textAlign: 'center'}}>E-COM Store.</Typography>
+        <Typography variant="h6" style={{fontFamily: 'Fira Code', fontWeight: 'bold', textAlign: 'center'}}>The Quick Shop for the Quick People.</Typography><br /><br />
         <Routes>
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
