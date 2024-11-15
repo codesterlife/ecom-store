@@ -1,22 +1,21 @@
 import React from 'react';
 import { Container, Typography, Button } from '@mui/material';
-import { useLocation, useNavigate } from 'react-router-dom';  // To retrieve passed state
+import { useLocation, useNavigate } from 'react-router-dom';
 
 function DirectPayment() {
   const location = useLocation();
-  const { product } = location.state || {};  // Get the product passed via navigate
-  const { cart } = location.state || {};  // Get cart passed via navigate
+  const { product } = location.state || {};
+  const { cart } = location.state || {};
 
   const navigate = useNavigate()
 
   if (!product) {
-    return <Typography variant="h6">No product selected</Typography>;  // Handle if no product is passed
+    return <Typography variant="h6">No product selected</Typography>;
   }
 
   const handlePayment = () => {
     alert(`Payment successful for ${product.name}`);
     navigate('/')
-    // Implement actual payment logic here
   };
 
   return (
@@ -29,7 +28,7 @@ function DirectPayment() {
         color="success"
         fullWidth
         style={{ marginTop: '20px' }}
-        onClick={handlePayment}  // Simulate payment
+        onClick={handlePayment}
       >
         Make Payment
       </Button>

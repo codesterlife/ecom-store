@@ -14,7 +14,6 @@ function Payment() {
     return <Typography variant="h6">No items in your cart</Typography>;
   }
 
-  // Calculate total price including quantity
   const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handlePayment = () => {
@@ -27,8 +26,8 @@ function Payment() {
         };
 
         const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
-        existingOrders.push(newOrder); // Add the new order to the list
-        localStorage.setItem('orders', JSON.stringify(existingOrders));
+        existingOrders.push(newOrder);
+        localStorage.setItem(`${username}_orders`, JSON.stringify(existingOrders));
       alert('Payment successful!');
       clearCart();
       navigate('/');

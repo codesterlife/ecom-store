@@ -31,27 +31,26 @@ router.post('/add-product', async (req, res) => {
   }
 });
 
-// PUT request to update product by ID
 router.put('/:productId', async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(
-      req.params.productId, // The productId from URL params
-      req.body, // The updated product data from the request body
-      { new: true } // This ensures the updated product is returned
+      req.params.productId,
+      req.body,
+      { new: true }
     );
 
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
 
-    res.json(product); // Return the updated product
+    res.json(product);
   } catch (error) {
     console.error('Error updating product:', error);
     res.status(500).json({ message: 'Server error' });
   }
 });
 
-// DELETE - Remove product by ID
+
 router.delete('/:productId', async (req, res) => {
   try {
     const product = await Product.findByIdAndDelete(req.params.productId);

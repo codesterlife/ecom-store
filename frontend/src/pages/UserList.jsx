@@ -1,4 +1,3 @@
-// src/pages/UsersPage.js
 import React, { useEffect, useState } from 'react';
 import axios from 'axios';
 import { Container, Typography, List, ListItem, ListItemText } from '@mui/material';
@@ -9,18 +8,16 @@ function UserList() {
   const navigate = useNavigate();
   const username = localStorage.getItem('user');
 
-  // Redirect if the user is not 'codester'
   useEffect(() => {
     if (username !== 'codester') {
-      navigate('/'); // Redirect to home if not 'codester'
+      navigate('/');
     }
   }, [username, navigate]);
 
   useEffect(() => {
-    // Fetch all users from the backend
     const fetchUsers = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/auth/users'); // Replace with your API endpoint
+        const response = await axios.get('http://localhost:5000/auth/users');
         setUsers(response.data.users);
       } catch (error) {
         console.error('Failed to fetch users', error);

@@ -8,7 +8,6 @@ function ProductCard({ product }) {
   const [username, setUsername] = useState(null);
 
   useEffect(() => {
-    // Set the username once the component is mounted
     const user = localStorage.getItem('username');
     setUsername(user);
     console.log(localStorage.getItem(user))
@@ -17,9 +16,8 @@ function ProductCard({ product }) {
   const { addToCart } = useCart();
   const navigate = useNavigate();
 
-  // Buy Now functionality to navigate directly to payment page
   const handleBuyNow = (product) => {
-    navigate('/paymentdirect', { state: { product } });  // Pass selected product to payment page
+    navigate('/paymentdirect', { state: { product } });
   };
 
   return (

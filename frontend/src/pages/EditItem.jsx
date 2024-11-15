@@ -4,7 +4,7 @@ import { useNavigate, useParams } from 'react-router-dom';
 import { Container, TextField, Button, Typography, Box } from '@mui/material';
 
 const EditItem = () => {
-  const { productId } = useParams(); // This should get the 'productId' from the URL
+  const { productId } = useParams();
   const navigate = useNavigate();
   const [product, setProduct] = useState({
     name: '',
@@ -14,12 +14,10 @@ const EditItem = () => {
   });
   
   useEffect(() => {
-    // Fetch the product details only if productId is valid
     if (productId) {
       const fetchProduct = async () => {
         try {
           const response = await axios.get(`http://localhost:5000/products/get-product/${productId}`);
-          // Ensure we provide default values if any field is missing
           setProduct({
             name: response.data.name || '',
             price: response.data.price || '',
@@ -43,19 +41,11 @@ const EditItem = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-  
-    // Make sure the productId is not undefined
-    if (!productId) {
-      console.error('Product ID is missing!');
-      return;
-    }
-  
+
     try {
-      // Send the PUT request to update the product
       const response = await axios.put(`http://localhost:5000/products/${productId}`, product);
-      
       alert('Product updated successfully!');
-      navigate('/'); // Redirect to home page after successful update
+      navigate('/');
     } catch (error) {
       console.error('Failed to update product:', error.response || error);
       alert('Error updating product');

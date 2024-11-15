@@ -12,8 +12,8 @@ function Profile() {
       if (username) {
         try {
           const response = await axios.get(`http://localhost:5000/auth/user/${username}`);
-          setUser(response.data.user || {}); // Default to empty object if undefined
-          const storedOrders = JSON.parse(localStorage.getItem('orders')) || [];
+          setUser(response.data.user || {});
+          const storedOrders = JSON.parse(localStorage.getItem(`${username}_orders`)) || [];
           setOrders(storedOrders);
         } catch (err) {
           console.error('Failed to fetch profile data', err);
@@ -25,7 +25,6 @@ function Profile() {
     fetchProfile();
   }, []);
 
-  // Show a loading message if user data is not available
   if (!user || Object.keys(user).length === 0) {
     return <Typography variant="h6">Loading...</Typography>;
   }

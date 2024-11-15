@@ -10,11 +10,10 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
-// Alternatively, configure CORS more specifically
 app.use(cors({
-  origin: 'http://localhost:5173', // Your frontend origin
-  methods: 'GET,POST,PUT,DELETE',  // Allowed methods
-  credentials: true,               // If your frontend requires cookies
+  origin: 'http://localhost:5173',
+  methods: 'GET,POST,PUT,DELETE',
+  credentials: true,
 }));
 
 mongoose

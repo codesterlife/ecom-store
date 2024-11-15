@@ -1,31 +1,28 @@
-// src/pages/Cart.js
 import React from 'react';
 import { Container, Typography, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
-import { useCart } from '../context/CartContext';  // Use Cart context
-import { useNavigate } from 'react-router-dom';  // To navigate to payment page
+import { useCart } from '../context/CartContext';
+import { useNavigate } from 'react-router-dom';
 import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
 import RemoveCircleOutlineSharpIcon from '@mui/icons-material/RemoveCircleOutlineSharp';
 
 function Cart() {
-  const { cart, addToCart, decreaseQuantity, removeFromCart, clearCart} = useCart();  // Access cart and removeFromCart functions
-  const navigate = useNavigate();  // Hook for navigation
+  const { cart, addToCart, decreaseQuantity, removeFromCart, clearCart} = useCart();
+  const navigate = useNavigate();
 
   const handleRemoveItem = (id) => {
-    removeFromCart(id);  // Call remove function with the specific product's id
+    removeFromCart(id);
   };
 
   const handleDecreaseQuantity = (id) => {
-    decreaseQuantity(id); // Call the decreaseQuantity function
+    decreaseQuantity(id);
   };
 
-  // Function to calculate the total amount
   const calculateTotalAmount = () => {
     return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
-  // Proceed to checkout, pass the cart to the payment page
   const handleCheckout = () => {
-    navigate('/payment', { state: { cart } });  // Pass entire cart array to the payment page
+    navigate('/payment', { state: { cart } });
   };
 
   const handleClearCart = () => {
@@ -91,7 +88,7 @@ function Cart() {
           color="primary"
           fullWidth
           style={{ marginTop: '20px' }}
-          onClick={handleCheckout}  // Navigate to payment page
+          onClick={handleCheckout}
         >
           Proceed to Checkout
         </Button>

@@ -23,7 +23,7 @@ function Navbar() {
   const user = localStorage.getItem('user');
 
   const handleLogout = () => {
-    // Clear the cart when logging out
+
     clearCart();
 
     localStorage.removeItem('user');
