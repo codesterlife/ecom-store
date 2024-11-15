@@ -11,9 +11,10 @@ function Profile() {
       const username = localStorage.getItem('user');
       if (username) {
         try {
-          const response = await axios.get(`http://localhost:5000/api/user/${username}`);
+          const response = await axios.get(`http://localhost:5000/auth/user/${username}`);
           setUser(response.data.user || {}); // Default to empty object if undefined
-          setOrders(response.data.orders || []); // Default to empty array if undefined
+          const storedOrders = JSON.parse(localStorage.getItem('orders')) || [];
+          setOrders(storedOrders);
         } catch (err) {
           console.error('Failed to fetch profile data', err);
         }
@@ -31,18 +32,25 @@ function Profile() {
 
   return (
     <Container>
-      <Typography variant="h4">Profile</Typography>
+      <Typography variant="h4" style={{ fontWeight: 'bold'  }}>Profile</Typography>
       <Typography variant="h6">Username: {user.username}</Typography>
-      <Typography variant="h6">Email: {user.email}</Typography>
+      <Typography variant="h6">Email: {user.email}</Typography><br />
 
-      <Typography variant="h5" style={{ marginTop: '20px' }}>Order History</Typography>
-      <List>
-        {orders.map((order, index) => (
-          <ListItem key={index}>
-            <ListItemText primary={`Order ${index + 1}: $${order.amount}`} secondary={order.date} />
-          </ListItem>
-        ))}
-      </List>
+      <Typography variant="h5" style={{ marginTop: '20px', fontWeight: 'bold' }}>Order History:</Typography>
+      {orders.length === 0 ? (
+        <Typography variant="body1">No orders found.</Typography>
+      ) : (
+        <List>
+          {orders.map((order, index) => (
+            <ListItem key={index}>
+              <ListItemText
+                primary={`Order ${index + 1}: $${order.totalAmount}`}
+                secondary={`Date: ${order.date}`}
+              />
+            </ListItem>
+          ))}
+        </List>
+      )}
     </Container>
   );
 }

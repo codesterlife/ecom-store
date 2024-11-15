@@ -31,16 +31,16 @@ export const CartProvider = ({ children }) => {
 // Function to add an item to the cart
 const addToCart = (product) => {
   setCart((prevCart) => {
-    // Check if the product already exists in the cart using the `id`
-    const existingProduct = prevCart.find((item) => item.id === product.id);
+    // Check if the product already exists in the cart using its `id`
+    const existingProduct = prevCart.find((item) => item._id === product._id);
 
     if (existingProduct) {
-      // If the product exists, create a new array and update the quantity
+      // If the product exists, increase the quantity for that product
       return prevCart.map((item) =>
-        item.id === product.id ? { ...item, quantity: item.quantity + 1 } : item
+        item._id === product._id ? { ...item, quantity: item.quantity + 1 } : item
       );
     } else {
-      // If the product is new, add it to the cart with quantity 1
+      // If the product is new (not in cart), add it with quantity 1
       return [...prevCart, { ...product, quantity: 1 }];
     }
   });
@@ -62,7 +62,7 @@ const decreaseQuantity = (productId) => {
 
 // Function to remove a specific item from the cart
 const removeFromCart = (productId) => {
-  setCart((prevCart) => prevCart.filter((item) => item.id !== productId));
+  setCart((prevCart) => prevCart.filter((item) => item._id !== productId));
 };
 
 

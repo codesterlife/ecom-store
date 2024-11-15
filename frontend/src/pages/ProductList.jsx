@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
-import { Button, Grid, Card, CardMedia, CardContent, Typography, CardActions } from '@mui/material';
+import { Button, Grid, Card, CardMedia, CardContent, Typography, CardActions, Container } from '@mui/material';
 
 const ProductList = () => {
   const [products, setProducts] = useState([]);
@@ -10,7 +10,7 @@ const ProductList = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');
+        const response = await axios.get('http://localhost:5000/products/get-product');
         setProducts(response.data);  // Assuming the API returns an array of products
       } catch (error) {
         console.error('Error fetching products:', error);
@@ -26,12 +26,13 @@ const ProductList = () => {
       console.log('Attempting to delete product with ID:', productId); // Log product ID
       
       // Send DELETE request to server
-      const response = await axios.delete(`http://localhost:5000/api/products/${productId}`);
+      const response = await axios.delete(`http://localhost:5000/products/${productId}`);
       
       // Remove the product from the state on success
       setProducts(products.filter(product => product._id !== productId));
   
-      console.log('Product removed successfully:', response.data.message);
+      window.alert('Product removed successfully.');
+
     } catch (error) {
       console.error('Error deleting product:', error);
       alert('Failed to delete product. Please check if the product ID exists.');
@@ -39,13 +40,13 @@ const ProductList = () => {
   };
   
   return (
-    <div>
+    <Container>
       <h2>Product List</h2>
       <Grid container spacing={3}>
         {products.map(product => (
           <Grid item key={product._id} xs={5} sm={6} md={3}>
             <Card>
-                <CardMedia component="img" height="300" image={product.image} alt={product.name} />
+                <CardMedia component="img" height="200" image={product.image} alt={product.name} />
                     <CardContent>
                         <Typography gutterBottom variant="h5" component="div">
                             {product.name}
@@ -66,7 +67,7 @@ const ProductList = () => {
           </Grid>
         ))}
       </Grid>
-    </div>
+    </Container>
   );
 };
 

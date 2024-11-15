@@ -13,17 +13,21 @@ import DirectPayment from './pages/DirectPayment';
 import EditItem from './pages/EditItem';
 import ProductList from './pages/ProductList';
 import { Typography } from '@mui/material';
+import SearchResultsPage from './pages/SearchResultPage';
+import UserList from './pages/UserList';
 
 function App() {
   return (
     <CartProvider>
       <Router>
         <Navbar />
-        <div style={{ paddingTop: '64px' }}></div>
+        <div style={{ marginTop: '64px' }}></div>
         <Typography variant="h3" style={{fontFamily: 'Fira Code', fontWeight: 'bold', textAlign: 'center'}}>E-COM Store.</Typography>
-        <Typography variant="h6" style={{fontFamily: 'Fira Code', fontWeight: 'bold', textAlign: 'center'}}>The Quick Shop for the Quick People.</Typography><br /><br />
+        <Typography variant="h6" style={{fontFamily: 'Fira Code', fontWeight: 'bold', textAlign: 'center'}}>The Quick Shop for the Quick People.</Typography><br />
         <Routes>
           <Route path="/" element={<Home />} />
+          <Route path="/user-list" element={<UserList />} />
+          <Route path="/search" element={<SearchResultsPage />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/profile" element={<Profile />} />

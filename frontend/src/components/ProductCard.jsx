@@ -24,13 +24,13 @@ function ProductCard({ product }) {
 
   return (
     <Card>
-      <CardMedia component="img" height="300" image={product.image} alt={product.name} />
+      <CardMedia component="img" height="250" image={product.image} alt={product.name} />
       <CardContent>
         <Typography gutterBottom variant="h5" component="div">
           {product.name}
         </Typography>
         <Typography variant="body2" color="text.secondary">
-          {product.category} - ${product.price}
+          {product.category} - <b>${product.price}</b>
         </Typography>
       </CardContent>
       <CardActions>

@@ -1,37 +1,51 @@
-// src/pages/Payment.js
 import React from 'react';
 import { Container, Typography, Button } from '@mui/material';
-import { useLocation } from 'react-router-dom';  // To retrieve passed state
+import { useLocation, useNavigate } from 'react-router-dom';
+import { useCart } from '../context/CartContext'; 
+
 
 function Payment() {
   const location = useLocation();
-  const { cart } = location.state || {};  // Get cart passed via navigate
+  const navigate = useNavigate();
+  const { cart } = location.state || {};
+  const { clearCart } = useCart();
 
-  if (!cart) {
-    return <Typography variant="h6">No items in your cart</Typography>;  // Handle if no cart is passed
+  if (!cart || cart.length === 0) {
+    return <Typography variant="h6">No items in your cart</Typography>;
   }
 
-  // Calculate total price of cart
-  const totalPrice = cart.reduce((total, item) => total + item.price, 0);
+  // Calculate total price including quantity
+  const totalPrice = cart.reduce((total, item) => total + item.price * item.quantity, 0);
 
   const handlePayment = () => {
-    alert('Payment successful!');
-    // Implement actual payment logic here (e.g., integrate with Stripe or PayPal)
+    const username = localStorage.getItem('user');
+    if (username) {
+        const newOrder = {
+          items: cart,
+          totalAmount: totalPrice,
+          date: new Date().toLocaleString(),
+        };
+
+        const existingOrders = JSON.parse(localStorage.getItem('orders')) || [];
+        existingOrders.push(newOrder); // Add the new order to the list
+        localStorage.setItem('orders', JSON.stringify(existingOrders));
+      alert('Payment successful!');
+      clearCart();
+      navigate('/');
+    } else {
+    alert('User not logged in!');
+    }
   };
 
   return (
     <Container>
       <Typography variant="h4" gutterBottom>Checkout</Typography>
       <Typography variant="h6">Items in your cart:</Typography>
-      {cart.length === 0 ? (
-        <Typography variant="h6">Your cart is empty</Typography>
-      ) : (
-        cart.map((item) => (
-          <Typography key={item.id} variant="body1">
-            {item.name} - ${item.price}
-          </Typography>
-        ))
-      )}
+      {cart.map((item) => (
+        <Typography key={item.id} variant="body1">
+          {item.name} - ${item.price} x {item.quantity} = ${item.price * item.quantity}
+        </Typography>
+      ))}
       <Typography variant="h5" style={{ marginTop: '20px' }}>
         Total: ${totalPrice}
       </Typography>
@@ -40,7 +54,7 @@ function Payment() {
         color="success"
         fullWidth
         style={{ marginTop: '20px' }}
-        onClick={handlePayment}  // Simulate payment
+        onClick={handlePayment}
       >
         Make Payment
       </Button>

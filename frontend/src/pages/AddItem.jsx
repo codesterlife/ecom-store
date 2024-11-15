@@ -13,7 +13,7 @@ function AddItem() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await axios.post('http://localhost:5000/api/add-product', { name, price, category, image });
+      await axios.post('http://localhost:5000/products/add-product', { name, price, category, image });
       alert('Product added successfully');
       navigate('/');
     } catch (err) {
@@ -22,9 +22,9 @@ function AddItem() {
   };
 
   return (
-    <Container>
+    <Container maxWidth="sm">
       <h2>Add New Item</h2>
-      <form onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '30px'}}>
         <TextField label="Name" value={name} onChange={(e) => setName(e.target.value)} fullWidth /><br /><br />
         <TextField label="Price" value={price} onChange={(e) => setPrice(e.target.value)} fullWidth /><br /><br />
         <TextField label="Category" value={category} onChange={(e) => setCategory(e.target.value)} fullWidth /><br /><br />

@@ -18,7 +18,7 @@ const EditItem = () => {
     if (productId) {
       const fetchProduct = async () => {
         try {
-          const response = await axios.get(`http://localhost:5000/api/products/${productId}`);
+          const response = await axios.get(`http://localhost:5000/products/get-product/${productId}`);
           // Ensure we provide default values if any field is missing
           setProduct({
             name: response.data.name || '',
@@ -52,7 +52,7 @@ const EditItem = () => {
   
     try {
       // Send the PUT request to update the product
-      const response = await axios.put(`http://localhost:5000/api/products/${productId}`, product);
+      const response = await axios.put(`http://localhost:5000/products/${productId}`, product);
       
       alert('Product updated successfully!');
       navigate('/'); // Redirect to home page after successful update
@@ -63,7 +63,7 @@ const EditItem = () => {
   };
 
   return (
-    <Container maxWidth="sm" style={{ marginTop: '2rem' }}>
+    <Container maxWidth="sm" style={{ marginTop: '2rem', backgroundColor: 'white', borderRadius: '12px', padding: '30px'}} >
       <Typography variant="h4" gutterBottom>
         Edit Product
       </Typography>

@@ -11,7 +11,7 @@ function Login() {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      const response = await axios.post('http://localhost:5000/api/login', { username, password });
+      const response = await axios.post('http://localhost:5000/auth/login', { username, password });
       localStorage.setItem('user', username);
       navigate('/');
     } catch (error) {
@@ -20,7 +20,7 @@ function Login() {
   };
 
   return (
-    <Container>
+    <Container maxWidth="sm">
       <h2>Login</h2>
       <form onSubmit={handleSubmit} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '30px'}}>
         <TextField label="Username" value={username} onChange={(e) => setUsername(e.target.value)} fullWidth /> <br /><br />

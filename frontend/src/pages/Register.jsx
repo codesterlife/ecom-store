@@ -17,7 +17,7 @@ function Register() {
       return;
     }
     try {
-      await axios.post('http://localhost:5000/api/register', { username, email, password });
+      await axios.post('http://localhost:5000/auth/register', { username, email, password });
       navigate('/login');
     } catch (error) {
       console.log(error)
@@ -26,7 +26,7 @@ function Register() {
   };
 
   return (
-    <Container>
+    <Container maxWidth="sm">
       <h2>Register</h2>
       <form onSubmit={handleSubmit} style={{ backgroundColor: 'white', borderRadius: '12px', padding: '30px'}}>
         <TextField label="Username" value={username} onChange={(e) => setUsername(e.target.value)} fullWidth /><br /><br />

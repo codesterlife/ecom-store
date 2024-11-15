@@ -10,7 +10,7 @@ function Home() {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get('http://localhost:5000/api/products');  // Adjust with correct API route
+        const response = await axios.get('http://localhost:5000/products/get-product');  // Adjust with correct API route
         setProducts(response.data);
       } catch (err) {
         console.error('Error fetching products:', err);
@@ -21,6 +21,7 @@ function Home() {
 
   return (
     <Container>
+      <h2>Our Products</h2>
       <Grid container spacing={3}>
         {Array.isArray(products) && products.map(product => (
           <Grid item xs={12} sm={6} md={4} key={product._id}>

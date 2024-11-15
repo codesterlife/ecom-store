@@ -1,8 +1,10 @@
 // src/pages/Cart.js
 import React from 'react';
-import { Container, Typography, Button, List, ListItem, ListItemText } from '@mui/material';
+import { Container, Typography, Button, List, ListItem, ListItemText, IconButton } from '@mui/material';
 import { useCart } from '../context/CartContext';  // Use Cart context
 import { useNavigate } from 'react-router-dom';  // To navigate to payment page
+import AddCircleOutlineSharpIcon from '@mui/icons-material/AddCircleOutlineSharp';
+import RemoveCircleOutlineSharpIcon from '@mui/icons-material/RemoveCircleOutlineSharp';
 
 function Cart() {
   const { cart, addToCart, decreaseQuantity, removeFromCart, clearCart} = useCart();  // Access cart and removeFromCart functions
@@ -14,6 +16,11 @@ function Cart() {
 
   const handleDecreaseQuantity = (id) => {
     decreaseQuantity(id); // Call the decreaseQuantity function
+  };
+
+  // Function to calculate the total amount
+  const calculateTotalAmount = () => {
+    return cart.reduce((total, item) => total + item.price * item.quantity, 0);
   };
 
   // Proceed to checkout, pass the cart to the payment page
@@ -38,19 +45,23 @@ function Cart() {
                 primary={item.name}
                 secondary={`$${item.price}`}
               />
-              <p>Quantity: {item.quantity}</p>&nbsp;&nbsp;
+              <IconButton 
+                onClick={() => addToCart(item)} 
+                color="secondary"
+                size="small"
+              >
+                <AddCircleOutlineSharpIcon />
+              </IconButton>&nbsp;
+              <b>{item.quantity}</b>&nbsp;&nbsp;
+              <IconButton 
+                onClick={() => handleDecreaseQuantity(item.id)}  
+                color="secondary"
+                size="small"
+              >
+                <RemoveCircleOutlineSharpIcon />
+              </IconButton>&nbsp;&nbsp;&nbsp;&nbsp;
               <Button 
-                onClick={() => addToCart(item)}
-                variant="contained" 
-                color="inherit"
-              >+</Button>&nbsp;
-              <Button 
-                onClick={() => handleDecreaseQuantity(item.id)} 
-                variant="contained" 
-                color="inherit"
-              >-</Button>&nbsp;
-              <Button 
-                onClick={ () => handleRemoveItem(item.id) } 
+                onClick={ () => handleRemoveItem(item._id) } 
                 variant="contained" 
                 color="error"
               >
@@ -60,6 +71,11 @@ function Cart() {
           ))}
         </List>
       )}
+      {cart.length > 0 && (
+        <Typography variant="h6" style={{ marginTop: '20px' }}>
+          Total Amount: ${calculateTotalAmount()}
+        </Typography>
+      )}<br /><br />
       {cart.length > 0 && (
         <Button 
           onClick={ () => handleClearCart() } 
