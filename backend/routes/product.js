@@ -2,12 +2,21 @@ const express = require('express');
 const Product = require('../models/Product');
 const router = express.Router();
 
-router.get('/products', async (req, res) => {
+router.get('/get-product', async (req, res) => {
   try {
     const products = await Product.find();
     res.json(products);
   } catch (err) {
     res.status(500).send('Error fetching products');
+  }
+});
+
+router.get('/get-product/:productId', async (req, res) => {
+  try {
+    const products = await Product.findById(req.params.productId);
+    res.json(products);
+  } catch (err) {
+    res.status(500).send(`Error fetching product of ID ${req.params.productId}`);
   }
 });
 
@@ -23,7 +32,7 @@ router.post('/add-product', async (req, res) => {
 });
 
 // PUT request to update product by ID
-router.put('/products/:productId', async (req, res) => {
+router.put('/:productId', async (req, res) => {
   try {
     const product = await Product.findByIdAndUpdate(
       req.params.productId, // The productId from URL params
@@ -43,14 +52,12 @@ router.put('/products/:productId', async (req, res) => {
 });
 
 // DELETE - Remove product by ID
-router.delete('/products/:productId', async (req, res) => {
+router.delete('/:productId', async (req, res) => {
   try {
-    const product = await Product.findByIdAndDelete(req.params.id);
-
+    const product = await Product.findByIdAndDelete(req.params.productId);
     if (!product) {
       return res.status(404).json({ message: 'Product not found' });
     }
-
     res.json({ message: 'Product deleted successfully' });
   } catch (error) {
     console.error(error);

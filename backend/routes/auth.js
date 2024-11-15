@@ -31,6 +31,22 @@ router.post('/login', async (req, res) => {
 });
 
 // Fetch user profile by username
+router.get('/users', async (req, res) => {
+  try {
+    const users = await User.find({}, 'username email');
+    
+    if (!users) {
+      return res.status(404).send('Users details not found');
+    }
+
+    res.status(200).json({ users });
+  } catch (err) {
+    console.error('Error fetching users details:', err);
+    res.status(500).send('Error fetching users details');
+  }
+});
+
+// Fetch user profile by username
 router.get('/user/:username', async (req, res) => {
   try {
     const { username } = req.params;
@@ -41,7 +57,7 @@ router.get('/user/:username', async (req, res) => {
     }
 
     // Send user data and order history if applicable
-    res.status(200).json({ user, orders: user.orders });
+    res.status(200).json({ user });
   } catch (err) {
     console.error('Error fetching user profile:', err);
     res.status(500).send('Error fetching user profile');
